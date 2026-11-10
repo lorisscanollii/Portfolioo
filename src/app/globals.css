@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* Dark-first design system. `[data-theme="light"]` overrides the tokens. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --background: #0a0e12;
+  --foreground: #e6ebef;
+  --card: #10161d;
+  --muted-foreground: #93a1ad;
+  --border: #1f2a33;
+  --accent: #34d399;
+  --accent-foreground: #052e22;
+
+  --terminal-bg: #0b1016;
+  --terminal-border: #1d2b36;
+  --terminal-text: #b6c3cd;
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --background: #f6f8f7;
+  --foreground: #10171b;
+  --card: #ffffff;
+  --muted-foreground: #4b5561;
+  --border: #dbe3e6;
+  --accent: #047857;
+  --accent-foreground: #ffffff;
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-terminal-bg: var(--terminal-bg);
+  --color-terminal-border: var(--terminal-border);
+  --color-terminal-text: var(--terminal-text);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+}
+
+/* Offset anchored sections below the sticky navbar. */
+section[id],
+article[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Accessible default focus indicator. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Subtle technical grid used as hero background. */
+.hero-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--muted-foreground) 14%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--muted-foreground) 14%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    black 30%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    black 30%,
+    transparent 100%
+  );
+}
+
+/* Availability status pulse (respecting reduced motion above). */
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.status-dot {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+/* Form submit spinner. */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.submit-spinner {
+  animation: spin 0.7s linear infinite;
+}
