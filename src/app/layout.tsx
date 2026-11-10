@@ -72,7 +72,7 @@ export const viewport: Viewport = {
  * Sets the color theme before first paint to avoid a flash.
  * Reads the saved preference, otherwise falls back to the OS preference.
  */
-const themeInitScript = `(function(){try{var s=localStorage.getItem("theme");var t=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");var d=document.documentElement;d.dataset.theme=t;d.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme="dark";}})();`;
+const themeInitScript = `(function(){try{var d=document.documentElement;d.classList.add("js");var s=localStorage.getItem("theme");var t=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");d.dataset.theme=t;d.style.colorScheme=t;}catch(e){document.documentElement.classList.add("js");document.documentElement.dataset.theme="dark";}})();`;
 
 export default function RootLayout({
   children,

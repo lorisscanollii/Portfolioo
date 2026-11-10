@@ -1,14 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
-import Skills from "@/components/Skills";
-import Infrastructure from "@/components/Infrastructure";
-import Projects from "@/components/Projects";
-import Achievements from "@/components/Achievements";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import ScrollProgress from "@/components/ScrollProgress";
+import ImmersiveExperience from "@/components/immersive/ImmersiveExperience";
+import NoScriptFallback from "@/components/NoScriptFallback";
 import { siteConfig, skills } from "@/data/portfolio";
 
 /** Professional structured data (schema.org Person). */
@@ -29,25 +20,8 @@ const personJsonLd = {
 export default function Home() {
   return (
     <>
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-accent-foreground"
-      >
-        Skip to main content
-      </a>
-      <Navbar />
-      <ScrollProgress />
-      <main id="main" tabIndex={-1} className="outline-none">
-        <Hero />
-        <About />
-        <Experience />
-        <Skills />
-        <Infrastructure />
-        <Projects />
-        <Achievements />
-        <Contact />
-      </main>
-      <Footer />
+      <ImmersiveExperience />
+      <NoScriptFallback />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

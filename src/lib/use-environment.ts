@@ -87,6 +87,23 @@ export function useWebGLSupport(): boolean | null {
   return supported;
 }
 
+/**
+ * Pauses expensive rendering when the page is hidden. Browsers throttle
+ * background tabs, but this also stops the render loop immediately.
+ */
+export function usePageVisible(): boolean {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const update = () => setVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  return visible;
+}
+
 interface UseInViewOptions {
   rootMargin?: string;
   threshold?: number;

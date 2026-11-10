@@ -611,3 +611,177 @@ export const achievement: Achievement = {
   description:
     "Recognized for developing an innovative healthcare technology solution focused on supporting autistic children through interactive learning and social play.",
 };
+
+/* ── Immersive world ───────────────────────────────────────────────────── */
+
+export type StationId =
+  | "home"
+  | "about"
+  | "experience"
+  | "skills"
+  | "projects"
+  | "achievements"
+  | "contact";
+
+export interface WorldStation {
+  id: StationId;
+  index: string;
+  label: string;
+  kicker: string;
+  summary: string;
+}
+
+export const worldStations: WorldStation[] = [
+  {
+    id: "home",
+    index: "00",
+    label: "Home",
+    kicker: "Central entrance",
+    summary: "The entrance to the system.",
+  },
+  {
+    id: "about",
+    index: "01",
+    label: "About",
+    kicker: "Profile terminal",
+    summary: "Professional background and the way I work.",
+  },
+  {
+    id: "experience",
+    index: "02",
+    label: "Experience",
+    kicker: "IT infrastructure floor",
+    summary: "The systems, spaces and responsibilities behind the work.",
+  },
+  {
+    id: "skills",
+    index: "03",
+    label: "Skills",
+    kicker: "Technology network",
+    summary: "Connected disciplines and the tools I use in practice.",
+  },
+  {
+    id: "projects",
+    index: "04",
+    label: "Projects",
+    kicker: "Project exhibition",
+    summary: "Selected applications, concepts and production systems.",
+  },
+  {
+    id: "achievements",
+    index: "05",
+    label: "Achievements",
+    kicker: "Award gallery",
+    summary: "Recognition for technology that makes a difference.",
+  },
+  {
+    id: "contact",
+    index: "06",
+    label: "Contact",
+    kicker: "Communication terminal",
+    summary: "Open a channel for roles, projects and technical work.",
+  },
+];
+
+export interface AboutArtifact {
+  id: "infrastructure" | "support" | "development" | "problem-solving";
+  label: string;
+  title: string;
+  description: string;
+  points: string[];
+}
+
+/**
+ * The four interactive objects in the About environment. The wording is
+ * grounded in the bio and experience data above - no proficiency claims.
+ */
+export const aboutArtifacts: AboutArtifact[] = [
+  {
+    id: "infrastructure",
+    label: "INFRASTRUCTURE",
+    title: "IT Infrastructure",
+    description:
+      "I work with the systems behind day-to-day operations: servers, networks, cloud services, user accounts and the configuration that holds them together.",
+    points: [
+      "Linux and Windows administration.",
+      "Ubuntu Server, Apache, Cloudflare and Tailscale.",
+      "Google Workspace, accounts and organizational systems.",
+    ],
+  },
+  {
+    id: "support",
+    label: "SUPPORT",
+    title: "Technical Support",
+    description:
+      "Practical troubleshooting for the people using technology - in classrooms, examination rooms and offices where reliability matters.",
+    points: [
+      "Windows, hardware and software diagnostics.",
+      "Printers, peripherals and remote assistance.",
+      "Classroom and examination-room support.",
+    ],
+  },
+  {
+    id: "development",
+    label: "DEVELOPMENT",
+    title: "Software Development",
+    description:
+      "I design, build and deploy complete web applications, from the database schema and API to the interface and production server.",
+    points: [
+      "Full-stack application development.",
+      "Next.js, React, TypeScript and Python.",
+      "Database architecture and production deployment.",
+    ],
+  },
+  {
+    id: "problem-solving",
+    label: "PROBLEM SOLVING",
+    title: "Problem Solving",
+    description:
+      "I enjoy finding the cause of a problem, not just clearing the symptom - and turning that understanding into a more reliable system.",
+    points: [
+      "Diagnosing technical problems methodically.",
+      "Automating repetitive processes.",
+      "Building applications that solve real-world problems.",
+    ],
+  },
+];
+
+export interface ExperienceObject {
+  id: string;
+  label: string;
+  /** Source content in `experience.areas` or `infrastructure.nodes`. */
+  areaId?: string;
+  nodeId?: string;
+}
+
+/**
+ * Physical objects in the Experience environment. Each one maps back to the
+ * existing experience area or infrastructure node content.
+ */
+export const experienceObjects: ExperienceObject[] = [
+  { id: "support-desk", label: "SUPPORT DESK", areaId: "it-support" },
+  { id: "server-core", label: "SERVER CORE", areaId: "it-administration" },
+  { id: "network-spine", label: "NETWORK SPINE", areaId: "networking" },
+  { id: "printer", label: "PRINT STATION", nodeId: "printer" },
+  { id: "monitoring-wall", label: "MONITORING WALL", nodeId: "cloud" },
+  { id: "classroom", label: "CLASSROOM / EXAM", nodeId: "exam" },
+];
+
+/**
+ * Practical usage notes for the skills network. These explain where the tools
+ * are used; they are not skill percentages or proficiency ratings.
+ */
+export const skillDetails: Record<string, string> = {
+  "IT Support":
+    "Hands-on diagnosis and support across Windows desktops, operating systems, printers, peripherals, classrooms and examination rooms.",
+  "System Administration":
+    "Administering user accounts, servers and cloud services across Google Workspace, Windows, Ubuntu Server, Apache, Moodle and Cloudflare.",
+  Networking:
+    "Configuring and diagnosing connectivity from TCP/IP, DNS and DHCP to Wi-Fi access points, routers and basic Cisco IOS configuration.",
+  "Software Development":
+    "Building full-stack applications and interfaces with modern JavaScript and TypeScript, React, Next.js, Node.js, REST APIs and Python.",
+  Databases:
+    "Modelling relational data and working with queries, schema changes and application data in MySQL, MariaDB, SQL and Prisma.",
+  "Infrastructure & Deployment":
+    "Running and shipping services on Linux with Apache, Docker, Cloudflare, Git, GitHub and SSH.",
+};
