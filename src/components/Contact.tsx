@@ -37,7 +37,7 @@ export default function Contact() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
-          index="06"
+          index="07"
           id="contact-heading"
           title="Get in Touch"
           description="Have a technical problem to solve, a role to fill, or a project to discuss? The fastest way to reach me is by email — I'm also open to professional connections and collaboration."

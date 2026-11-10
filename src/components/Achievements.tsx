@@ -11,7 +11,7 @@ export default function Achievements() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
-          index="05"
+          index="06"
           id="achievements-heading"
           title="Achievements"
           description="Recognition for building technology that makes a difference."

@@ -61,7 +61,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop navigation */}
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-0.5 lg:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
@@ -70,7 +70,7 @@ export default function Navbar() {
                   activeSection === link.href ? "true" : undefined
                 }
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "rounded-md px-2.5 py-2 text-[13px] font-medium transition-colors",
                   activeSection === link.href
                     ? "text-accent"
                     : "text-muted-foreground hover:text-foreground",

@@ -133,6 +133,7 @@ export const navLinks: NavLink[] = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
+  { label: "Infrastructure", href: "#infrastructure" },
   { label: "Projects", href: "#projects" },
   { label: "Achievements", href: "#achievements" },
   { label: "Contact", href: "#contact" },
@@ -338,6 +339,127 @@ export const toolchain: string[] = [
   "PowerShell",
   "Command Prompt",
 ];
+
+/* ── Infrastructure ─────────────────────────────────────────────────────── */
+
+export type InfraNodeKind =
+  | "cloud"
+  | "network"
+  | "server"
+  | "computer"
+  | "device";
+
+export interface InfraNode {
+  id: string;
+  label: string;
+  kind: InfraNodeKind;
+  /** Position in the illustrative 3D diagram. */
+  position: [number, number, number];
+  description: string;
+}
+
+export interface InfraLink {
+  from: string;
+  to: string;
+}
+
+export const infrastructure = {
+  intro:
+    "The systems behind the day-to-day work: cloud services, servers, network equipment, staff computers, and connected devices. Hover or select a component to see how it fits into the environment.",
+  note: "Illustrative topology based on the systems I work with — not a live network diagram or an actual monitoring view.",
+  kindLabels: {
+    cloud: "Cloud infrastructure",
+    network: "Network",
+    server: "Server",
+    computer: "Computer",
+    device: "Connected device",
+  } satisfies Record<InfraNodeKind, string>,
+  nodes: [
+    {
+      id: "cloud",
+      label: "Cloud services",
+      kind: "cloud",
+      position: [0, 2.05, -0.5],
+      description:
+        "Google Workspace and Google Admin Console for accounts, groups, and organizational services — plus Cloudflare for DNS, proxying, and edge configuration.",
+    },
+    {
+      id: "edge",
+      label: "Network edge",
+      kind: "network",
+      position: [0, 0.35, 0.35],
+      description:
+        "Routers, Wi-Fi access points, DNS, and DHCP. This is where connectivity is configured, diagnosed, and kept stable across the organization.",
+    },
+    {
+      id: "ubuntu",
+      label: "Ubuntu server",
+      kind: "server",
+      position: [-2.35, 1.05, -0.15],
+      description:
+        "Linux host for production applications and internal services — administered over SSH with Apache virtual hosts, MariaDB databases, and application deployments.",
+    },
+    {
+      id: "windows",
+      label: "Windows & directory",
+      kind: "server",
+      position: [2.35, 1.05, -0.15],
+      description:
+        "Windows administration, user account management, password resets, account security, and support for organizational systems such as Moodle.",
+    },
+    {
+      id: "wifi",
+      label: "Wi-Fi access point",
+      kind: "network",
+      position: [0.1, -0.85, 1.15],
+      description:
+        "Wireless configuration and troubleshooting: SSIDs, signal coverage, roaming between access points, and connectivity diagnostics.",
+    },
+    {
+      id: "workstation",
+      label: "Staff workstation",
+      kind: "computer",
+      position: [-2.55, -1.35, 0.4],
+      description:
+        "Windows desktops used by academic and administrative staff — operating system installs, software, peripherals, and remote technical assistance.",
+    },
+    {
+      id: "classroom",
+      label: "Classroom",
+      kind: "computer",
+      position: [-0.95, -1.95, -0.25],
+      description:
+        "Teaching spaces supported on site: presentation equipment, network connectivity, and the practical IT issues that come up during lessons.",
+    },
+    {
+      id: "exam",
+      label: "Examination room",
+      kind: "computer",
+      position: [1.15, -1.9, 0.3],
+      description:
+        "Dedicated support for examination rooms, where reliability matters most — machines, connectivity, and printers checked before and during exams.",
+    },
+    {
+      id: "printer",
+      label: "Printers & peripherals",
+      kind: "device",
+      position: [2.6, -1.15, 0.45],
+      description:
+        "Printer installation, driver and queue configuration, peripheral diagnostics, and hardware troubleshooting for offices and classrooms.",
+    },
+  ] satisfies InfraNode[],
+  links: [
+    { from: "cloud", to: "edge" },
+    { from: "edge", to: "ubuntu" },
+    { from: "edge", to: "windows" },
+    { from: "edge", to: "wifi" },
+    { from: "wifi", to: "workstation" },
+    { from: "wifi", to: "classroom" },
+    { from: "wifi", to: "exam" },
+    { from: "wifi", to: "printer" },
+    { from: "ubuntu", to: "windows" },
+  ] satisfies InfraLink[],
+};
 
 /* ── Projects ───────────────────────────────────────────────────────────── */
 

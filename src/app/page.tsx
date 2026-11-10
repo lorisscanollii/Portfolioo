@@ -3,10 +3,12 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
+import Infrastructure from "@/components/Infrastructure";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
 import { siteConfig, skills } from "@/data/portfolio";
 
 /** Professional structured data (schema.org Person). */
@@ -34,11 +36,13 @@ export default function Home() {
         Skip to main content
       </a>
       <Navbar />
+      <ScrollProgress />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <About />
         <Experience />
         <Skills />
+        <Infrastructure />
         <Projects />
         <Achievements />
         <Contact />

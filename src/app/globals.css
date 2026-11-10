@@ -138,3 +138,64 @@ body {
 .submit-spinner {
   animation: spin 0.7s linear infinite;
 }
+
+/* ── 3D / interactive visual layer ─────────────────────────────────────── */
+
+.hero-visual {
+  background:
+    radial-gradient(
+      ellipse 72% 68% at 50% 45%,
+      color-mix(in srgb, var(--accent) 9%, transparent),
+      transparent 72%
+    ),
+    var(--card);
+}
+
+.hero-chip {
+  animation: hero-chip-float 6.5s ease-in-out infinite;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@keyframes hero-chip-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -7px, 0);
+  }
+}
+
+.scene-3d {
+  perspective: 1200px;
+}
+
+.project-stage {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 220ms ease-out;
+  will-change: transform;
+}
+
+.layer-1 {
+  transform: translateZ(18px);
+}
+
+.layer-2 {
+  transform: translateZ(42px);
+}
+
+.layer-3 {
+  transform: translateZ(68px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-stage {
+    transform: none;
+    transition: none;
+  }
+
+  .hero-chip {
+    animation: none;
+  }
+}

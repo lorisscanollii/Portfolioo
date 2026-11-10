@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 interface SectionHeadingProps {
   index: string;
   title: string;
@@ -12,7 +14,7 @@ export default function SectionHeading({
   description,
 }: SectionHeadingProps) {
   return (
-    <div className="mb-10 md:mb-14">
+    <Reveal className="mb-10 md:mb-14">
       <p
         className="flex items-center gap-3 font-mono text-sm text-accent"
         aria-hidden="true"
@@ -34,6 +36,6 @@ export default function SectionHeading({
           {description}
         </p>
       ) : null}
-    </div>
+    </Reveal>
   );
 }

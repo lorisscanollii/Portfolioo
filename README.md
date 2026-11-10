@@ -9,7 +9,8 @@ from any web server or CDN — no Node.js runtime is required in production.
 
 - **Production domain:** https://loriscanolli.com
 - **Output:** static HTML/CSS/JS in `out/`
-- **Stack:** Next.js 15, React 19, TypeScript, Tailwind CSS v4, lucide-react
+- **Stack:** Next.js 15, React 19, TypeScript, Tailwind CSS v4, lucide-react,
+  Three.js, React Three Fiber, Drei, Framer Motion
 
 ---
 
@@ -18,7 +19,16 @@ from any web server or CDN — no Node.js runtime is required in production.
 - **Single source of truth** — every piece of content (bio, experience, skills, projects,
   achievements, contact details, SEO copy) lives in `src/data/portfolio.ts`.
 - **Hero** with headline, roles, availability status, primary CTAs, and CV download.
-- **Sections:** About, Experience, Skills, Projects, Achievements, Contact.
+- **3D hero visual** — a wireframe infrastructure core, connected constellation, data pulses,
+  particles, a server stack, and floating technology chips. The scene rotates slowly and
+  responds subtly to the pointer, with depth and theme-aware lighting.
+- **Sections:** About, Experience, Skills, Infrastructure, Projects, Achievements, Contact.
+- **Interactive infrastructure network** — a 3D topology of cloud services, servers,
+  network edge, workstations, Wi-Fi, printers, and classroom/exam devices. Hover or click
+  a node (or use the keyboard-accessible legend) to read what Loris does with it.
+- **Illustrative project visuals** — CSS 3D / SVG concept scenes for Finora, Playground
+  Life, and College TV. They are explicitly labelled as illustrative 3D concepts, never
+  presented as real application screenshots.
 - **Five projects** with honest status badges:
   - Finora — *Live — Production* (link to https://finora.loriscanolli.com)
   - Playground Life — *Completed* (1st Place — Prishtina Inovate Healthcare)
@@ -35,7 +45,12 @@ from any web server or CDN — no Node.js runtime is required in production.
   backend: it composes a complete email and opens the visitor's mail client.
 - **Accessibility:** skip link, semantic landmarks, labelled form fields with inline
   errors, visible focus styles, keyboard-friendly mobile navigation, `aria-live`
-  terminal output, reduced-motion support.
+  terminal output, keyboard-accessible network legend, reduced-motion support.
+- **Performance-aware 3D:** WebGL scenes are dynamically imported, mount only when idle
+  or near the viewport, pause when offscreen, cap device pixel ratio, reduce particle
+  counts on mobile, and animate on demand when reduced motion is enabled.
+- **Graceful fallbacks:** static SVG fallbacks when WebGL is unavailable or data saver is
+  enabled, plus a no-WebGL visual for the infrastructure section.
 - **SEO:** per-page metadata, canonical URL, Open Graph + Twitter cards, JSON-LD `Person`,
   `robots.txt`, `sitemap.xml`, web manifest, SVG favicon.
 - **Responsive** from small phones to wide desktop layouts.
@@ -60,22 +75,35 @@ from any web server or CDN — no Node.js runtime is required in production.
 │  ├─ components/
 │  │  ├─ Navbar.tsx          # Responsive nav + mobile menu + active section
 │  │  ├─ Hero.tsx            # Headline, status, CTAs, terminal
+│  │  ├─ HeroVisual.tsx      # Lazy 3D hero card, chips, HUD, fallback
 │  │  ├─ Terminal.tsx        # Interactive terminal
 │  │  ├─ About.tsx
 │  │  ├─ Experience.tsx
 │  │  ├─ Skills.tsx
+│  │  ├─ Infrastructure.tsx  # Interactive network section
+│  │  ├─ NetworkExplorer.tsx # Canvas, legend, live description panel
 │  │  ├─ Projects.tsx
+│  │  ├─ ProjectVisual.tsx   # CSS 3D / SVG illustrative project scenes
 │  │  ├─ Achievements.tsx
 │  │  ├─ Contact.tsx
 │  │  ├─ ContactForm.tsx
 │  │  ├─ Footer.tsx
 │  │  ├─ SectionHeading.tsx
+│  │  ├─ Reveal.tsx          # One-shot Framer Motion heading reveal
+│  │  ├─ ScrollProgress.tsx  # Framer Motion scroll indicator
 │  │  ├─ StatusBadge.tsx
 │  │  ├─ ThemeToggle.tsx
 │  │  ├─ CopyrightYear.tsx
-│  │  └─ BrandIcons.tsx      # Inline GitHub / LinkedIn SVGs
+│  │  ├─ BrandIcons.tsx      # Inline GitHub / LinkedIn SVGs
+│  │  └─ three/
+│  │     ├─ HeroScene.tsx    # Hero WebGL scene and lifecycle
+│  │     ├─ NetworkScene.tsx # Interactive infrastructure topology
+│  │     ├─ SceneFallback.tsx # Static SVG fallbacks
+│  │     └─ geometry.ts      # Sphere/edge geometry helpers
 │  ├─ data/portfolio.ts      # ← ALL CONTENT LIVES HERE
-│  └─ lib/utils.ts           # cn() helper
+│  └─ lib/
+│     ├─ use-environment.ts  # Viewport, theme, WebGL, reduced-motion hooks
+│     └─ utils.ts            # cn() helper
 ├─ scripts/generate-cv.mjs   # Dependency-free CV PDF generator
 ├─ public/
 │  ├─ og-image.png           # 1200×630 social preview
@@ -97,6 +125,7 @@ Open **`src/data/portfolio.ts`** and edit the exported objects:
 | `about`         | Bio paragraphs, role cards, "at a glance" facts                     |
 | `experience`    | Intro + IT Support / IT Administration / Networking responsibility lists |
 | `skills`        | Skill groups and the toolchain row                                  |
+| `infrastructure`| Network topology nodes, links, kind labels, and section note        |
 | `projects`      | Project cards, statuses, highlights, technologies, links            |
 | `achievement`   | Awards section                                                      |
 
@@ -118,6 +147,42 @@ Also review `location: "Kosovo"` and `availability` in `siteConfig` if they chan
 
 The email address is used by the contact form (`mailto:`), the contact section, and the
 footer — updating it in `portfolio.ts` updates all three at once.
+
+---
+
+## 3D graphics and motion
+
+The visual layer is intentionally split so that the static page stays fast:
+
+- **Hero (`components/three/HeroScene.tsx`)** — a lightweight WebGL scene with a wireframe
+  core, connected node constellation, data pulses, particles, a server stack, and floating
+  geometry. It rotates slowly and follows the pointer with restrained parallax.
+- **Infrastructure (`components/three/NetworkScene.tsx`)** — an interactive topology built
+  from the `infrastructure` data. Nodes support hover and click selection, links animate
+  with pulses, and the legend mirrors the same state for keyboard and screen-reader users.
+- **Project visuals (`components/ProjectVisual.tsx`)** — CSS 3D and SVG scenes for Finora,
+  Playground Life, and College TV. They are illustrative concepts, not screenshots, and
+  each figure says so in its caption. Card tilt is pointer-driven and disabled when
+  reduced motion is requested.
+
+Both WebGL scenes are loaded with `next/dynamic` and `ssr: false`, so they do not ship in
+the initial HTML payload. They defer mounting until the browser is idle (hero) or the
+section is near the viewport (infrastructure). Rendering details:
+
+- Device pixel ratio is capped at `[1, 1.5]` on mobile and `[1, 2]` on desktop.
+- Particle and pulse counts are reduced on small screens; antialiasing is disabled on mobile.
+- Each canvas uses `frameloop="never"` while offscreen and `frameloop="demand"` under
+  reduced motion. The ambient animation runs in `"always"` mode only when appropriate.
+- Scene colors follow the active light/dark theme, and canvases repaint when the theme
+  changes.
+- WebGL contexts and geometries are disposed on unmount, and context loss is forced.
+- If WebGL is unavailable or `navigator.connection.saveData` is set, static SVG fallbacks
+  are rendered instead. The infrastructure legend still works in fallback mode.
+- Framer Motion adds a scroll-progress bar and one-shot section-heading reveals; a
+  `prefers-reduced-motion` preference removes those animations.
+
+The scenes are decorative enhancements: all information remains available as text, and
+the site continues to work as a fully static export.
 
 ---
 

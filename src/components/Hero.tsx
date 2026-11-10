@@ -1,4 +1,5 @@
 import { ArrowRight, Download, Mail } from "lucide-react";
+import HeroVisual from "./HeroVisual";
 import Terminal from "./Terminal";
 import { siteConfig } from "@/data/portfolio";
 
@@ -74,9 +75,15 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Interactive terminal */}
-        <div role="region" aria-label="Interactive terminal — a technical overview of Loris Canolli">
-          <Terminal />
+        {/* 3D infrastructure visual + interactive terminal */}
+        <div className="flex flex-col gap-6">
+          <HeroVisual />
+          <div
+            role="region"
+            aria-label="Interactive terminal — a technical overview of Loris Canolli"
+          >
+            <Terminal />
+          </div>
         </div>
       </div>
     </section>
