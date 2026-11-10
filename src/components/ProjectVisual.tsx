@@ -266,7 +266,7 @@ export default function ProjectVisual({
   const Visual = VARIANTS[variant];
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (reduced) return;
+    if (reduced || event.pointerType !== "mouse") return;
     const stage = stageRef.current;
     if (!stage) return;
     const rect = stage.getBoundingClientRect();

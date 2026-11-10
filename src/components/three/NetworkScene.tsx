@@ -236,6 +236,12 @@ function NodeGroup({
     if (!group.current) return;
 
     const targetScale = active ? 1.16 : 1;
+    if (reduced) {
+      group.current.scale.setScalar(targetScale);
+      group.current.position.y = node.position[1];
+      return;
+    }
+
     const nextScale = THREE.MathUtils.damp(
       group.current.scale.x,
       targetScale,
@@ -244,10 +250,8 @@ function NodeGroup({
     );
     group.current.scale.setScalar(nextScale);
 
-    if (!reduced) {
-      group.current.position.y =
-        node.position[1] + Math.sin(state.clock.elapsedTime * 0.7 + index) * 0.025;
-    }
+    group.current.position.y =
+      node.position[1] + Math.sin(state.clock.elapsedTime * 0.7 + index) * 0.025;
   });
 
   return (
@@ -468,7 +472,9 @@ export default function NetworkScene({
       style={{ position: "absolute", inset: 0, touchAction: "pan-y" }}
     >
       <Suspense fallback={null}>
-        <InvalidateOnChange value={`${theme}:${reduced}:${selectedId}:${hoveredId}`} />
+        <InvalidateOnChange
+          value={`${theme}:${reduced}:${active}:${selectedId}:${hoveredId}`}
+        />
         <ambientLight intensity={1.2} />
         <directionalLight position={[4, 6, 5]} intensity={2} />
 

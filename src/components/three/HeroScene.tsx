@@ -428,7 +428,7 @@ export default function HeroScene({
       style={{ position: "absolute", inset: 0 }}
     >
       <Suspense fallback={null}>
-        <InvalidateOnChange value={`${theme}:${reduced}`} />
+        <InvalidateOnChange value={`${theme}:${reduced}:${active}`} />
         <Rig reduced={reduced}>
           <SceneContents mobile={mobile} theme={theme} />
         </Rig>
