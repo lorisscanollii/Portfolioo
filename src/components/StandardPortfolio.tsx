@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -45,10 +46,10 @@ export default function StandardPortfolio() {
           <span className="standard-bar-dot" aria-hidden="true" />
           Accessible document version
         </p>
-        <a href="/">
+        <Link href="/">
           Open the immersive 3D portfolio
           <span aria-hidden="true">↗</span>
-        </a>
+        </Link>
       </div>
 
       <Navbar />

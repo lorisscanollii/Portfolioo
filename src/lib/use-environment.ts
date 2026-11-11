@@ -64,12 +64,13 @@ export function useWebGLSupport(): boolean | null {
 
   useEffect(() => {
     let available = false;
-    let context: WebGLRenderingContext | null = null;
+    let context: WebGL2RenderingContext | null = null;
     try {
       const canvas = document.createElement("canvas");
-      context = (canvas.getContext("webgl") ??
-        canvas.getContext("experimental-webgl")) as WebGLRenderingContext | null;
-      available = Boolean(window.WebGLRenderingContext && context);
+      // Three.js renders through WebGL2. Probing only WebGL1 would report a
+      // false positive on devices where the scene cannot create a renderer.
+      context = canvas.getContext("webgl2");
+      available = Boolean(window.WebGL2RenderingContext && context);
       const connection = (
         navigator as Navigator & { connection?: NetworkInformation }
       ).connection;

@@ -388,15 +388,20 @@ export default function DetailDrawer({
 
   useEffect(() => {
     if (!selection) {
-      previousFocus.current?.focus();
+      const target = previousFocus.current;
       previousFocus.current = null;
+      target?.focus();
       return;
     }
 
-    previousFocus.current =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
+    // Keep the original trigger when the inspector switches from one item to
+    // another; by then focus is already inside the drawer.
+    if (!previousFocus.current) {
+      previousFocus.current =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+    }
 
     const frame = window.requestAnimationFrame(() => closeRef.current?.focus());
 

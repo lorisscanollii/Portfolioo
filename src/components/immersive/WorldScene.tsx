@@ -132,11 +132,22 @@ const MOBILE_CAMERAS: Record<StationId, CameraConfig> = Object.fromEntries(
 
 function CanvasCleanup() {
   const gl = useThree((state) => state.gl);
+  const disposeTimer = useRef<number | null>(null);
 
   useEffect(() => {
+    // React StrictMode runs an effect cleanup immediately after mount. Defer
+    // disposal so that remount can cancel it and the live renderer survives.
+    if (disposeTimer.current !== null) {
+      window.clearTimeout(disposeTimer.current);
+      disposeTimer.current = null;
+    }
+
     return () => {
-      gl.dispose();
-      gl.forceContextLoss();
+      disposeTimer.current = window.setTimeout(() => {
+        gl.dispose();
+        gl.forceContextLoss();
+        disposeTimer.current = null;
+      }, 0);
     };
   }, [gl]);
 

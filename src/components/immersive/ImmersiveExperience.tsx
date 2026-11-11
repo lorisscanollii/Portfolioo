@@ -283,14 +283,26 @@ export default function ImmersiveExperience() {
     };
   }, [fallback]);
 
-  /* Deep links such as /#projects should open the matching station. */
+  /* Deep links such as /#projects should open the matching station. The
+     hashchange listener also handles same-document hash navigation. */
   useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (worldStations.some((station) => station.id === hash)) {
-      setActive(hash as StationId);
-      const info = getStation(hash as StationId);
+    const syncFromHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (!worldStations.some((station) => station.id === hash)) return;
+
+      const station = hash as StationId;
+      setActive(station);
+      setSelected(null);
+      setMenuOpen(false);
+      setHintVisible(false);
+
+      const info = getStation(station);
       setLiveMessage(`Now viewing ${info.label}. ${info.summary}`);
-    }
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
   }, []);
 
   /* Simulated, honest loading progress: it stops short until the canvas is ready. */
@@ -324,17 +336,18 @@ export default function ImmersiveExperience() {
     if (webgl === false || sceneFailed) setLoaderVisible(false);
   }, [sceneFailed, webgl]);
 
-  /* A canvas that never reports ready should not trap the visitor. */
+  /* A canvas that never reports ready should not trap the visitor. Hidden
+     tabs stop animation frames, so the startup clock only runs while visible. */
   useEffect(() => {
-    if (webgl !== true || sceneReady || sceneFailed) return;
+    if (!pageVisible || webgl !== true || sceneReady || sceneFailed) return;
 
     const timer = window.setTimeout(() => {
       setSceneFailed(true);
       setLoaderVisible(false);
-    }, 14000);
+    }, 30000);
 
     return () => window.clearTimeout(timer);
-  }, [sceneFailed, sceneReady, webgl]);
+  }, [pageVisible, sceneFailed, sceneReady, webgl]);
 
   /* Wheel over the open 3D area travels between stations. UI regions scroll. */
   useEffect(() => {

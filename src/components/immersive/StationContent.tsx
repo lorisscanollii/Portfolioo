@@ -452,7 +452,7 @@ function AchievementsContent({
         </div>
         <div>
           <p className="world-award-status">Winner / Healthcare technology</p>
-          <h2 className="world-award-title">FIRST PLACE</h2>
+          <h2 className="world-award-title">FIRST PLACE WINNER</h2>
           <p className="world-award-event">Prishtina Inovate Healthcare</p>
           <p className="world-award-project">
             Playground Life - Social Play for Autism
